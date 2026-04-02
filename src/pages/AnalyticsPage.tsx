@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
   reports.forEach(r => {
     const analysis = r.gene_analysis as Json;
     if (Array.isArray(analysis)) {
-      (analysis as GeneAnalysisItem[]).forEach((g) => {
+      (analysis as unknown as GeneAnalysisItem[]).forEach((g) => {
         if (g.riskContribution > 0) {
           const existing = geneMap.get(g.gene) || { total: 0, count: 0 };
           geneMap.set(g.gene, { total: existing.total + g.riskContribution, count: existing.count + 1 });
