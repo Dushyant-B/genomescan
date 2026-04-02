@@ -14,7 +14,86 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      genetic_reports: {
+        Row: {
+          created_at: string
+          disease_type: string
+          gene_analysis: Json
+          id: string
+          risk_level: string
+          risk_score: number
+          summary: string | null
+          upload_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          disease_type: string
+          gene_analysis?: Json
+          id?: string
+          risk_level: string
+          risk_score: number
+          summary?: string | null
+          upload_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          disease_type?: string
+          gene_analysis?: Json
+          id?: string
+          risk_level?: string
+          risk_score?: number
+          summary?: string | null
+          upload_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "genetic_reports_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "genetic_uploads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      genetic_uploads: {
+        Row: {
+          created_at: string
+          disease_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          disease_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          disease_type?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
