@@ -6,8 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import RiskBadge from '@/components/RiskBadge';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import { DISEASES, parseCSV, analyzeGenetics } from '@/lib/geneticAnalysis';
-import { Upload, Trash2, FileText, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { DISEASES, parseCSV, analyzeGenetics, generateSampleCSV } from '@/lib/geneticAnalysis';
+import { Upload, Trash2, FileText, Loader2, CheckCircle2, AlertCircle, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import type { AnalysisResult } from '@/lib/geneticAnalysis';
 
