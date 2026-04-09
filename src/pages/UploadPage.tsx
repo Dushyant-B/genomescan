@@ -134,6 +134,26 @@ export default function UploadPage() {
                     ))}
                   </SelectContent>
                 </Select>
+                {disease && (
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="mt-1 p-0 h-auto text-xs"
+                    onClick={() => {
+                      const csv = generateSampleCSV(disease);
+                      const blob = new Blob([csv], { type: 'text/csv' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `sample_${disease.replace(/\s+/g, '_').toLowerCase()}_genes.csv`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                  >
+                    <Download className="h-3 w-3 mr-1" />
+                    Download sample CSV for {disease}
+                  </Button>
+                )}
               </div>
 
               <div>
