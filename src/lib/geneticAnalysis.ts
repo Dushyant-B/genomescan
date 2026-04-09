@@ -66,6 +66,33 @@ const DISEASE_RISK_GENES: Record<string, Record<string, { riskAlleles: string[];
 
 export const DISEASES = Object.keys(DISEASE_RISK_GENES);
 
+/** Generate sample CSV content for a given disease with realistic risk data */
+export function generateSampleCSV(disease: string): string {
+  const genes = DISEASE_RISK_GENES[disease];
+  if (!genes) return '';
+
+  const headers = 'Gene,Variant,Allele1,Allele2';
+  const rows = Object.entries(genes).map(([gene, info], i) => {
+    const variant = `rs${100000 + i * 1117}`;
+    // Alternate between affected, carrier, and normal for variety
+    const mod = i % 3;
+    if (mod === 0) {
+      // affected: both alleles are risk
+      return `${gene},${variant},${info.riskAlleles[0]},${info.riskAlleles[0]}`;
+    } else if (mod === 1) {
+      // carrier: one risk allele
+      const safeAllele = info.riskAlleles[0] === 'A' ? 'G' : 'A';
+      return `${gene},${variant},${info.riskAlleles[0]},${safeAllele}`;
+    } else {
+      // normal: no risk alleles
+      const safeAllele = info.riskAlleles[0] === 'A' ? 'G' : 'A';
+      return `${gene},${variant},${safeAllele},${safeAllele}`;
+    }
+  });
+
+  return [headers, ...rows].join('\n');
+}
+
 export function parseCSV(text: string): GeneData[] {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
